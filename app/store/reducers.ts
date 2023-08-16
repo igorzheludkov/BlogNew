@@ -1,7 +1,9 @@
 import {apiSlice} from './modules/api/apiSlice';
-import appSlice from './modules/app/slice';
+import postsSlice from './modules/posts/slice';
+import commentsSlice from './modules/comments/slice';
 
 export default {
   [apiSlice.reducerPath]: apiSlice.reducer,
-  appSlice,
+  postsSlice,
+  commentsSlice,
 };

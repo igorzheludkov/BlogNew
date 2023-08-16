@@ -1,21 +1,52 @@
 import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import PostCard from './PostCard'; // Assuming your Card component is in a file named "Card.tsx"
-import {TPost} from '../store/modules/api/posts/postsSlice';
+import PostCard from './PostCard';
+import {
+  TPost,
+  useEditPostMutation,
+  useListPostQuery,
+  useRemovePostMutation,
+} from '../store/modules/api/posts/postsApi';
+import {useAppSelector} from '../store/hooks';
+import Loader from './Loader';
+import {useNavigation} from '@react-navigation/native';
 
-// Define the interface for the post object
-interface Props {
-  posts: TPost[];
-}
+const PostList: React.FC = () => {
+  const navigation = useNavigation();
+  const data = useAppSelector(state => state.postsSlice.posts);
+  const {data: posts} = useListPostQuery();
+  const [editPost] = useEditPostMutation();
+  const [removePost] = useRemovePostMutation();
 
-const PostList: React.FC<Props> = ({posts}) => {
-  // Render function for each item in the FlatList
-  const renderItem = ({item}: {item: TPost}) => <PostCard post={item} />;
+  function onSave(item: TPost) {
+    editPost({payload: item});
+    console.log('onSave', item);
+  }
+
+  function onRemove(id: TPost['id']) {
+    removePost({id});
+    console.log('onRemove');
+  }
+
+  const renderItem = ({item}: {item: TPost}) => (
+    <PostCard
+      post={item}
+      onRemove={onRemove}
+      onSave={onSave}
+      editSuccessed={false}
+      //@ts-ignore
+      onPress={() => navigation.navigate('PostShowScreen', {id: item.id})}
+    />
+  );
+
+  if (!data) {
+    return <Loader />;
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={posts}
+        data={data}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
       />
@@ -23,7 +54,6 @@ const PostList: React.FC<Props> = ({posts}) => {
   );
 };
 
-// Define styles using StyleSheet
 const styles = StyleSheet.create({
   container: {
     flex: 1,

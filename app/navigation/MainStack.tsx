@@ -12,7 +12,7 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: true}}
-      initialRouteName="StartScreen">
+      initialRouteName="PostsFeedScreen">
       <Stack.Screen
         name="PostsFeedScreen"
         component={PostsFeedScreen}
@@ -21,12 +21,12 @@ export default function MainNavigator() {
       <Stack.Screen
         name="PostShowScreen"
         component={PostShowScreen}
-        options={{headerTitle: 'Каталог'}}
+        options={{headerTitle: 'Post Show Screen'}}
       />
       <Stack.Screen
         name="PostAddScreen"
         component={PostAddScreen}
-        options={{headerTitle: 'Каталог'}}
+        options={{headerTitle: 'Post Add Screen'}}
       />
     </Stack.Navigator>
   );

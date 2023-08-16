@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
-import {TPost} from '../store/modules/api/posts/postsSlice';
+import {TPost} from '../store/modules/api/posts/postsApi';
 
 interface AddPostProps {
   onAddPost: (post: TPost) => void;
@@ -47,7 +47,7 @@ const AddPost: React.FC<AddPostProps> = ({onAddPost}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'white',
   },
   heading: {
     fontSize: 18,

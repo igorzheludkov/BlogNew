@@ -2,33 +2,26 @@ import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PostsStackTypes} from '../../../models/INavigationStack';
 import {View, Text, StyleSheet} from 'react-native';
-import {useListPostQuery} from '../../../store/modules/api/posts/postsSlice';
 import PostList from '../../../components/BlogRoll';
-import Loader from '../../../components/Loader';
 import Button from '../../../components/Button';
 
 type Props = NativeStackScreenProps<PostsStackTypes, 'PostsFeedScreen'>;
 
 export default function PostsFeedScreen({navigation}: Props) {
-  const {data, error} = useListPostQuery();
-
-  if (!data) {
-    return <Loader />;
-  }
-
   return (
     <View style={s.wrapper}>
-      <Text style={s.title}>PostsFeedScreen</Text>
-      {error ? <Text>Error</Text> : <PostList posts={data || []} />}
+      <Text style={s.title}>Posts Feed Screen</Text>
+      <PostList />
       <View style={s.addButton}>
         <Button
-          bgColor={'lightblue'}
-          borderColor={'lightblue'}
-          fontColor={'white'}
+          bgColor={'lightgray'}
+          borderColor={'gray'}
+          fontColor={'black'}
           fontSize={16}
           borderRadius={15}
           height={50}
-          borderWidth={1}
+          width={150}
+          borderWidth={0}
           onPress={() => navigation.navigate('PostAddScreen')}>
           Add Post
         </Button>
@@ -47,8 +40,9 @@ const s = StyleSheet.create({
   title: {fontSize: 20, paddingVertical: 20},
   addButton: {
     position: 'absolute',
-    right: 10,
+    right: 0,
     bottom: 10,
+    left: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },

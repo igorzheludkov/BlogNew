@@ -17,6 +17,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: [apiSlice.reducerPath],
+  // whitelist: [''],
 };
 
 const persistedReducer = persistCombineReducers(persistConfig, reducer);

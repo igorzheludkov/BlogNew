@@ -2,36 +2,31 @@ import apiSlice from '../apiSlice';
 
 export const postsApi = apiSlice.injectEndpoints({
   endpoints: build => ({
-    listPost: build.query<TPost[], void>({
+    listComment: build.query<TPost[], void>({
       providesTags: ['Posts'],
       query: () => '/posts/',
     }),
-    addPost: build.mutation<string, {payload: Partial<TPost>; userId: string}>({
+    addComment: build.mutation<string, {payload: TPost}>({
       invalidatesTags: ['Posts'],
-      query: ({userId, payload}) => ({
+      query: ({payload}) => ({
         body: {
-          user: userId,
           ...payload,
         },
         method: 'POST',
         url: '/posts/',
       }),
     }),
-    updatePost: build.mutation<
-      string,
-      {payload: Partial<TPost>; userId: string}
-    >({
+    updateComment: build.mutation<string, {payload: TPost}>({
       invalidatesTags: ['Posts'],
-      query: ({userId, payload}) => ({
+      query: ({payload}) => ({
         body: {
-          user: userId,
           ...payload,
         },
         method: 'PATCH',
         url: `/posts/${payload.id}/`,
       }),
     }),
-    removePost: build.mutation<string, {id: string; userId: string}>({
+    removeComment: build.mutation<string, {id: string}>({
       invalidatesTags: ['Posts'],
       query: ({id}) => ({
         method: 'DELETE',
@@ -45,13 +40,18 @@ export const postsApi = apiSlice.injectEndpoints({
 export default postsApi;
 
 export const {
-  useListPostQuery,
-  useAddPostMutation,
-  useUpdatePostMutation,
-  useRemovePostMutation,
+  useListCommentQuery,
+  useAddCommentMutation,
+  useUpdateCommentMutation,
+  useRemoveCommentMutation,
 } = postsApi;
 
 export type TPost = {
+  id: string;
+  title: string;
+  body: string;
+};
+export type TComment = {
   id: string;
   title: string;
   body: string;

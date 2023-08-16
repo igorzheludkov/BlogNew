@@ -19,9 +19,10 @@ interface ButtonProps extends TouchableOpacityProps {
   width?: DimensionValue;
   height?: DimensionValue;
   fontSize?: number;
+  fontWeight?: '400' | '500' | '600';
   fontColor?: string;
   icon?: React.ReactNode;
-  disabled?: boolean; // Add a new prop for disabled state
+  disabled?: boolean;
 }
 
 export default function Button(props: ButtonProps) {
@@ -33,19 +34,19 @@ export default function Button(props: ButtonProps) {
     width = 'auto',
     height = 40,
     fontSize = 16,
+    fontWeight = '600',
     fontColor = ColorTheme.buttonPrimaryText,
     icon,
     children,
     onPress,
-    disabled, // Destructure the disabled prop
+    disabled,
     ...restProps
   } = props;
 
-  // Define color styles for both enabled and disabled states
   const buttonStyles: ViewStyle = {
     backgroundColor: disabled ? ColorTheme.buttonDisabledBackground : bgColor,
     borderColor: disabled ? ColorTheme.buttonDisabledBackground : borderColor,
-    opacity: disabled ? 0.5 : 1, // Reduce opacity for disabled state
+    opacity: disabled ? 0.5 : 1,
     borderRadius,
     borderWidth,
     width,
@@ -60,14 +61,14 @@ export default function Button(props: ButtonProps) {
   const textStyles: TextStyle = {
     fontSize,
     color: disabled ? ColorTheme.buttonDisabledText : fontColor,
+    fontWeight,
   };
 
   return (
     <TouchableOpacity
-      style={[styles.wrapper, buttonStyles]}
+      style={[styles.wrapper, buttonStyles, styles.button]}
       onPress={onPress}
-      disabled={disabled} // Set the disabled state of the TouchableOpacity
-    >
+      disabled={disabled}>
       {icon && <View style={{marginRight: 5}}>{icon}</View>}
       <Text style={textStyles}>{children}</Text>
     </TouchableOpacity>
@@ -75,7 +76,12 @@ export default function Button(props: ButtonProps) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    // alignSelf: 'center' // Align button text in the middle horizontally and vertically
+  wrapper: {},
+  button: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });

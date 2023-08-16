@@ -6,6 +6,6 @@ export type MainBottomTabs = {
 
 export interface PostsStackTypes extends ParamListBase {
   PostsFeedScreen: undefined;
-  PostShowScreen: undefined;
+  PostShowScreen: {id: string | number};
   PostAddScreen: undefined;
 }
